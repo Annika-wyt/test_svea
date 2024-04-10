@@ -8,19 +8,19 @@
 
     <!-- Main argument -->
     <arg name="is_sim"                  default="false"/>
-    <arg name="is_indoors"              default="true" />
+    <arg name="is_indoors"              default="false" />
     <arg name="initial_pose_x"          default="0.0" />
     <arg name="initial_pose_y"          default="0.0" />
     <arg name="initial_pose_a"          default="0.0" />
 
     <!-- low-level interface (serial) -->
-    <arg name="start_serial"            default="false" /> 
+    <arg name="start_serial"            default="true" /> 
     <!-- Should be set to true, if only the localization is running 
     (i.e. this is needed in order to have wheel encoders and actuation_to_twist working) -->
     <arg name="lli_port"                default="/dev/ttyACM0"/>
 
     <!-- map server -->
-    <arg name="map_file"                default=""/>
+    <arg name="map_file"                default="/svea_ws/src/svea_core/maps/sml.yaml"/>
 
     <!-- Lidar  -->
     <arg name="lidar_ip"                default="192.168.3.11" />
@@ -29,8 +29,8 @@
     <arg name="start_wheel_encoders"    default="false" />
 
     <!-- GPS -->
-    <arg name="start_rtk"                 default="false"/>
-    <arg name="gps_device"              default="/dev/ttyACM0" />
+    <arg name="start_rtk"                 default="true"/>
+    <arg name="gps_device"              default="/dev/ttyACM1" />
     <arg name="delay"                   default="2.0"/>
     <!-- yaw offest = initial_pose_a -->
 
@@ -61,7 +61,7 @@
             <include file="$(find svea_sensors)/launch/sensors_launch/real_sense_camera.launch"></include>
 
             <!-- Start Lidar -->
-            <include file="$(find svea_sensors)/launch/sensors_launch/lidar.launch">
+            <include file="$(find svea_sensors)/launch/sensors_launch/lidar.launch">    
                 <arg name="lidar_ip"                    value="$(arg lidar_ip)" />
             </include>
 
@@ -89,7 +89,7 @@
         </group>
 
         <!-- Start IMU -->
-        <include file="$(find svea_sensors)/launch/sensors_launch/imu.launch"></include>
+        <!-- <include file="$(find svea_sensors)/launch/sensors_launch/imu.launch"></include> -->
 
         <!-- Start controller -->
         <include file="$(find svea_sensors)/launch/sensors_launch/controller.launch"></include>
@@ -130,7 +130,7 @@
                         0.0,                    0.0,                    0.0, 
                         0.0,                    0.0,                    0.0]
         </rosparam>
-        <param name="publish_tf"            value="true"/>
+        <param name="publish_tf"            value="false"/>
         <param name="odom0"                 value="rs/t265_camera/odom/sample"/>
         <param name="imu0"                  value="imu/data"/>
         <param name="twist0"                value="actuation_twist"/>
@@ -152,7 +152,7 @@
                         0.0,                    0.0,                    0.0, 
                         0.0,                    0.0,                    0.0]
         </rosparam>
-        <param name="publish_tf"            value="true"/>
+        <param name="publish_tf"            value="false"/>
         <param name="odom0"                 value="odometry/gps"/>
         <param name="imu0"                  value="imu/data"/>
         <param name="twist0"                value="actuation_twist"/>
